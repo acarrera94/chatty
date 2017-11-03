@@ -6,12 +6,17 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font: 13px Helvetica, Arial; }
         #container { margin: 200px 40px 100px 60px; width: 650px;
-            border: 1px solid #ccc; border-radius: 8px; }
+            border: 1px solid #ccc; border-radius: 8px; position: fixed;
+    bottom: 0;}
         #messages { list-style-type: none; margin: 0; padding: 0; }
         #messages li { padding: 5px 10px; }
         #messages li:nth-child(odd) { background: #eee; border-top-right-radius: 8px;
             border-top-left-radius: 8px; }
         #message li:first-child { border-top-right-radius: 8px; border-top-left-radius: 8px; }
+    	#right {text-align: center; }
+	span.tab{
+    padding: 0 20px; /* Or desired space*/
+}
     </style>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -36,12 +41,18 @@
 </script>
   <body>
     <div id="container">
+	    <div id= "right">
+	    <h1>incognito chat ;)</h1>
+	    <p>completely anonymous</p>
+	    <p>type a message, hit enter, and enjoy the creepers</p>
+	   
+	    </div>
         <ul id="messages"></ul>
         <form action="">
             <div class="input-group">
                 <input id="m" autocomplete="off" data-emojiable="true" data-emoji-input="unicode" type="text" class="form-control" placeholder="Type message...">
                 <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">Send</button>
+		<button class="btn btn-default" type="button"><span class="tab"></span></button>
                 </span>
             </div>
         </form>
