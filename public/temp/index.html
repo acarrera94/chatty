@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font: 13px Helvetica, Arial; }
+        #container { margin: 200px 40px 100px 60px; width: 650px;
+            border: 1px solid #ccc; border-radius: 8px; position: fixed;
+    bottom: 0;}
+        #messages { list-style-type: none; margin: 0; padding: 0; }
+        #messages li { padding: 5px 10px; }
+        #messages li:nth-child(odd) { background: #eee; border-top-right-radius: 8px;
+            border-top-left-radius: 8px; }
+        #message li:first-child { border-top-right-radius: 8px; border-top-left-radius: 8px; }
+    	#right {text-align: center; }
+	span.tab{
+    padding: 0 20px; /* Or desired space*/
+}
+    </style>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link href="css/emoji.css" rel="stylesheet" type="text/css">
+
+  </head>
+  <script src="/socket.io/socket.io.js"></script>
+ <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script>
+  $(function () {
+    var element = function(id){
+                return document.getElementById(id);
+            }
+            // Get Elements
+            var status = element('status');
+            var messages = element('messages');
+            var textarea = element('textarea');
+            var username = element('username');
+            var clearBtn = element('clear');
+            // Set default status
+            var statusDefault = status.textContent;
+            var setStatus = function(s){
+                // Set status
+                status.textContent = s;
+                if(s !== statusDefault){
+                    var delay = setTimeout(function(){
+                        setStatus(statusDefault);
+                    }, 3001);
+                }
+            }
+
+    var socket = io();
+    // $('form').submit(function(){
+    //   socket.emit('chat message', $('#s').val());
+    //   $('#s').val('');
+    //   return false;
+    // });
+	  // socket.on('chat message', function(msg){
+    //   $('#messages').append($('<li>').text(msg));
+    // });
+    if(socket !== undefined){
+                console.log('Connected to socket...');
+                // Handle Output
+                socket.on('output', function(data){
+                    //console.log(data);
+                    if(data.length){
+                        for(var x = 0;x < data.length;x++){
+                            // Build out message div
+                            var message = document.createElement('div');
+                            message.setAttribute('class', 'chat-message');
+                            message.textContent = data[x].name+": "+data[x].message;
+                            messages.appendChild(message);
+                            messages.insertBefore(message, messages.firstChild);
+                        }
+                    }
+                });
+                // Get Status From Server
+                socket.on('status', function(data){
+                    // get message status
+                    setStatus((typeof data === 'object')? data.message : data);
+                    // If status is clear, clear text
+                    if(data.clear){
+                        textarea.value = '';
+                    }
+                });
+                // Handle Input
+                textarea.addEventListener('keydown', function(event){
+                    if(event.which === 13 && event.shiftKey == false){
+                        // Emit to server input
+                        socket.emit('input', {
+                            name:username.value,
+                            message:textarea.value
+                        });
+                        event.preventDefault();
+                    }
+                })
+                // Handle Chat Clear
+                clearBtn.addEventListener('click', function(){
+                    socket.emit('clear');
+                });
+                // Clear Message
+                socket.on('cleared', function(){
+                    messages.textContent = '';
+                });
+            }
+  });
+</script>
+  <body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 col-sm-12">
+                <h1 class="text-center">
+                    Canvas Chat
+
+                </h1>
+                <div id="status"></div>
+                <div id="chat">
+                    <br>
+                    <div class="card">
+                        <div id="messages" class="card-block">
+
+                        </div>
+                    </div>
+                    <br>
+                    <input type="text" id="username" class="form-control" placeholder="Enter name...">
+                    <textarea id="textarea" class="form-control" placeholder="Enter message..."></textarea>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <button id="clear" class="btn btn-danger">Clear All</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Emoji Selector -->
+    <script src="js/config.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/jquery.emojiarea.js"></script>
+    <script src="js/emoji-picker.js"></script>
+  </body>
+</html>
