@@ -2,6 +2,15 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+const mongo = require('mongodb').MongoClient;
+
+mongo.connect('mongodb://127.0.0.1/mongochat', function(err, db){
+    if(err){
+        throw err;
+    }
+
+	console.log('MongoDB connected...');
+});
 
 app.use(express.static('lib'));
 
