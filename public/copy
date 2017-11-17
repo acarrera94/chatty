@@ -3,6 +3,20 @@
   <head>
     <title>Socket.IO chat</title>
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font: 13px Helvetica, Arial; background-color:black; }
+        #container { margin: 200px 40px 100px 60px; width: 650px;
+            border: 1px solid #ccc; border-radius: 8px; position: fixed;
+    bottom: 0;}
+        #messages { list-style-type: none; margin: 0; padding: 0; }
+        #messages li { padding: 5px 10px; }
+        #messages li:nth-child(odd) { background: #eee; border-top-right-radius: 8px;
+            border-top-left-radius: 8px; }
+        #message li:first-child { border-top-right-radius: 8px; border-top-left-radius: 8px; }
+    	#right {text-align: center; }
+	span.tab{
+    padding: 0 20px; /* Or desired space*/
+}
     </style>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">

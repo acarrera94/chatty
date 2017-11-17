@@ -1,3 +1,38 @@
 #canvas {
 	display: block;
 }
+
+body {
+	background-image: url("https://www.fg-a.com/wallpapers/white-background-geo-shapes.jpg");*/
+	color: red;
+	width: 650px;
+	margin: 0 auto;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+    background-position: center; 
+background-size: 800px 1100px;
+}
+	
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+       
+body { font: 13px Helvetica, Arial; background-color:black; }
+        
+#container { margin: 20px 40px 100px 60px; width: 650px;
+            border: 1px solid #ccc; border-radius: 8px; position: fixed;
+    bottom: 0;}
+        
+#messages { list-style-type: none; margin: 0; padding: 0; }
+        
+#messages li { padding: 5px 10px; }
+        
+#messages li:nth-child(odd) { background: #eee; border-top-right-radius: 8px;
+            border-top-left-radius: 8px; }
+        
+#message li:first-child { border-top-right-radius: 8px; border-top-left-radius: 8px; }
+        
+#right {text-align: center; }
+        
+span.tab{
+    padding: 0 20px; /* Or desired space*/
